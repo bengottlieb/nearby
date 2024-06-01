@@ -17,7 +17,7 @@ extension Date {
 	}
 }
 
-@available(macOS 12.0, iOS 14.0, *)
+@available(macOS 12.0, iOS 15.0, *)
 public struct NearbyDevicesHUD: View {
 	@ObservedObject var nearby = NearbySession.instance
 	@State var selectedDevice: NearbyDevice?

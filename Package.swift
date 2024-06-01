@@ -17,8 +17,8 @@ let package = Package(
             targets: ["Nearby"]),
     ],
     dependencies: [
-		.package(url: "https://github.com/bengottlieb/crossplatformkit.git", from: "1.0.9"),
-	   .package(url: "https://github.com/bengottlieb/suite.git", from: "1.0.90")
+		.package(url: "https://github.com/ios-tooling/crossplatformkit.git", from: "1.0.11"),
+	   .package(url: "https://github.com/ios-tooling/suite.git", from: "1.0.135")
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
