@@ -9,6 +9,23 @@ import Foundation
 import OSLog
 import Suite
 
+func logToConsole(_ string: String, onlyWhenDebugging: Bool = false) {
+	if #available(iOS 14.0, *) {
+		NearbyLogger.instance.log(string, onlyWhenDebugging: onlyWhenDebugging)
+	} else {
+		print(string)
+	}
+}
+
+func errorToConsole(_ error: Error, _ string: String) {
+	if #available(iOS 14.0, *) {
+		NearbyLogger.instance.error(error, string)
+	} else {
+		print(string)
+	}
+}
+
+@available(iOS 14.0, *)
 public class NearbyLogger {
 	public struct Notifications {
 		public static let logged = Notification.Name("logged-event")

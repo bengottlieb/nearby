@@ -36,7 +36,8 @@ class InternalRouter: NearbyMessageRouter {
 		
 		do {
 			switch kind {
-			case .ping: NearbyLogger.instance.log("PING")
+			case .ping: 
+				logToConsole("PING")
 			case .disconnect: device.disconnect()
 			case .dictionary:
 				if let message = try payload.reconstitute(NearbySystemMessage.DictionaryMessage.self) {
@@ -65,7 +66,7 @@ class InternalRouter: NearbyMessageRouter {
 
 			return try payload.reconstitute(NearbySystemMessage.self)
 		} catch {
-			NearbyLogger.instance.log("Failed to reconstitute a \(payload.command) message: \(error)")
+			logToConsole("Failed to reconstitute a \(payload.command) message: \(error)")
 		}
 		
 		return nil

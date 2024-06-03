@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	
 	@objc func discoveredDevice(note: Notification) {
 		if let device = note.object as? NearbyDevice {
-			NearbyLogger.instance.log("Found: \(device.deviceInfo!)", onlyWhenDebugging: true)
+			logToConsole("Found: \(device.deviceInfo!)", onlyWhenDebugging: true)
 		}
 	}
 

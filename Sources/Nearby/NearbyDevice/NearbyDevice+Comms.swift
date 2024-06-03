@@ -26,7 +26,7 @@ extension NearbyDevice {
 	}
 	
 	func disconnectFromPeers(completion: (() -> Void)? = nil) {
-		NearbyLogger.instance.log("Disconnecting from peers", onlyWhenDebugging: true)
+		logToConsole("Disconnecting from peers", onlyWhenDebugging: true)
 		#if os(iOS)
 			guard let application = NearbySession.instance.application else { return }
 			let taskID = application.beginBackgroundTask {
@@ -110,7 +110,7 @@ extension NearbyDevice {
 			return
 		}
 
-		NearbyLogger.instance.log("Sending dictionary \(dictionary) to \(name)")
+		logToConsole("Sending dictionary \(dictionary) to \(name)")
 		let payload = NearbyMessagePayload(message: NearbySystemMessage.DictionaryMessage(dictionary: dictionary))
 		send(payload: payload)
 		completion?()
@@ -118,18 +118,18 @@ extension NearbyDevice {
 	
 	public func send<MessageType: NearbyMessage>(message: MessageType, completion: (() -> Void)? = nil) {
 		if isLocalDevice {
-			NearbyLogger.instance.log("Not sending \(message) to local device.")
+			logToConsole("Not sending \(message) to local device.")
 			completion?()
 			return
 		}
 		
 		if session == nil {
-			NearbyLogger.instance.log("Not sending \(message), no session.")
+			logToConsole("Not sending \(message), no session.")
 			completion?()
 			return
 		}
 
-		NearbyLogger.instance.log("Sending \(message.command) as a \(type(of: message)) to \(name)", onlyWhenDebugging: true)
+		logToConsole("Sending \(message.command) as a \(type(of: message)) to \(name)", onlyWhenDebugging: true)
 		let payload = NearbyMessagePayload(message: message)
 		send(payload: payload)
 		completion?()
@@ -142,7 +142,7 @@ extension NearbyDevice {
 		do {
 			try session?.send(payload.payloadData, toPeers: [peerID], with: .reliable)
 		} catch {
-			NearbyLogger.instance.log("Error \(error) when sending to \(name)")
+			logToConsole("Error \(error) when sending to \(name)")
 		}
 	}
 	 
@@ -152,7 +152,7 @@ extension NearbyDevice {
 	
 	func session(didReceive data: Data) {
 		guard let payload = NearbyMessagePayload(data: data) else {
-			NearbyLogger.instance.log("Failed to decode message from \(data)")
+			logToConsole("Failed to decode message from \(data)")
 			return
 		}
 		
@@ -179,7 +179,7 @@ extension NearbyDevice {
 	}
 	
 	func stopSession() {
-		NearbyLogger.instance.log("Stopping: \(self.session == nil ? "nothing" : "session")")
+		logToConsole("Stopping: \(self.session == nil ? "nothing" : "session")")
 		self.session?.disconnect()
 		self.session = nil
 		self.state = .disconnected

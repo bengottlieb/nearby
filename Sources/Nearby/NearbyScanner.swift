@@ -83,7 +83,7 @@ extension NearbyScanner: MCNearbyServiceAdvertiserDelegate {
 	}
 	
 	public func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didNotStartAdvertisingPeer error: Error) {
-		NearbyLogger.instance.log("Error when starting advertising: \(error)")
+		logToConsole("Error when starting advertising: \(error)")
 		self.isAdvertising = false
 	}
 }
@@ -91,10 +91,10 @@ extension NearbyScanner: MCNearbyServiceAdvertiserDelegate {
 extension NearbyScanner: MCNearbyServiceBrowserDelegate {
 	func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String : String]?) {
 		guard let info else {
-			NearbyLogger.instance.log("No discovery info found for \(peerID.displayName)")
+			logToConsole("No discovery info found for \(peerID.displayName)")
 			return
 		}
-		NearbyLogger.instance.log("Found peer: \(peerID.displayName)", onlyWhenDebugging: true)
+		logToConsole("Found peer: \(peerID.displayName)", onlyWhenDebugging: true)
 		Task {
 			var device = await NearbySession.instance.device(for: peerID)
 			if device == nil { device = await NearbySession.deviceClass.init(peerID: peerID, info: info) }
@@ -113,7 +113,7 @@ extension NearbyScanner: MCNearbyServiceBrowserDelegate {
 	}
 	
 	func browser(_ browser: MCNearbyServiceBrowser, lostPeer peerID: MCPeerID) {
-		NearbyLogger.instance.log("Lost peer: \(peerID.displayName)", onlyWhenDebugging: true)
+		logToConsole("Lost peer: \(peerID.displayName)", onlyWhenDebugging: true)
 		Task {
 			if let device = await NearbySession.instance.device(for: peerID) {
 				device.disconnect()
@@ -122,7 +122,7 @@ extension NearbyScanner: MCNearbyServiceBrowserDelegate {
 	}
 	
 	func browser(_ browser: MCNearbyServiceBrowser, didNotStartBrowsingForPeers error: Error) {
-		NearbyLogger.instance.log("Error when starting browsing: \(error)")
+		logToConsole("Error when starting browsing: \(error)")
 		self.isBrowsing = false
 	}
 }

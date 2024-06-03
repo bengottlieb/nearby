@@ -29,7 +29,7 @@ class MessageHistory: ObservableObject {
 	}
 	
 	func record(payload: NearbyMessagePayload, from device: NearbyDevice) {
-		//NearbyLogger.instance.log("Handling Internal: \(payload.command)", onlyWhenDebugging: true)
+		//logToConsole("Handling Internal: \(payload.command)", onlyWhenDebugging: true)
 
 		if limit == 0 { return }
 		
@@ -39,7 +39,7 @@ class MessageHistory: ObservableObject {
 	}
 	
 	func record(payload: NearbyMessagePayload, to device: NearbyDevice) {
-		NearbyLogger.instance.log("Sending \(payload.command) as a \(type(of: payload)) to \(device.name)", onlyWhenDebugging: true)
+		logToConsole("Sending \(payload.command) as a \(type(of: payload)) to \(device.name)", onlyWhenDebugging: true)
 
 		if limit == 0 { return }
 		

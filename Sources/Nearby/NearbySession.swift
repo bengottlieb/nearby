@@ -72,7 +72,7 @@ extension NearbySession {
 	
 	public func sendToAll<MessageType: NearbyMessage>(message: MessageType?) {
 		guard let message else { return }
-		NearbyLogger.instance.log("Sending \(message.command) as a \(type(of: message)) to all", onlyWhenDebugging: true)
+		logToConsole("Sending \(message.command) as a \(type(of: message)) to all", onlyWhenDebugging: true)
 		let payload = NearbyMessagePayload(message: message)
 		Task {
 			for device in await self.connectedDevices.computedDevices {
@@ -144,7 +144,7 @@ extension NearbySession {
 	}
 	
 	public func shutdown() async {
-		NearbyLogger.instance.log("Shutting Down: \(peerID.displayName)", onlyWhenDebugging: true)
+		logToConsole("Shutting Down: \(peerID.displayName)", onlyWhenDebugging: true)
 		if !self.isActive || self.isShuttingDown { return }
 		self.isActive = false
 		self.isShuttingDown = true

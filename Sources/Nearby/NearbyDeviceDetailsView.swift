@@ -96,7 +96,10 @@ public struct NearbyDeviceDetailsView: View {
 					HStack {
 						Text("Connecting…")
 							.opacity(0.5)
-						ProgressView()
+						
+						if #available(iOS 14.0, *) {
+							ProgressView()
+						}
 					}
 				} else {
 					Button("Connect") { device.connect() }

@@ -31,13 +31,13 @@ class AvatarCache {
 				return cache
 			}
 		} catch {
-			NearbyLogger.instance.log("Failed to retreive avatar info: \(error)")
+			logToConsole("Failed to retreive avatar info: \(error)")
 		}
 		return nil
 	}
 	
 	func store(_ message: NearbySystemMessage.Avatar) {
-		NearbyLogger.instance.log("Storing avatar for \(message.hash)")
+		logToConsole("Storing avatar for \(message.hash)")
 		
 		let cache = CachedAvatar(image: message.image, name: message.name, hash: message.hash)
 		cachedAvatars[message.hash] = cache
@@ -47,7 +47,7 @@ class AvatarCache {
 			let url = directory.appendingPathComponent(message.hash)
 			try data.write(to: url)
 		} catch {
-			NearbyLogger.instance.log("Failed to store avatar info: \(error)")
+			logToConsole("Failed to store avatar info: \(error)")
 		}
 	}
 }
