@@ -23,7 +23,7 @@ extension NearbyDevice {
 	}
 }
 
-extension MCSessionState: CustomStringConvertible {
+extension MCSessionState: @retroactive CustomStringConvertible {
 	public var description: String {
 		switch self {
 		case .connected: return "*connected*"

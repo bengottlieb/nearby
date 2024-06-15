@@ -17,7 +17,7 @@ public extension String {
 }
 
 
-extension MCPeerID: Identifiable {
+extension MCPeerID: @retroactive Identifiable {
 	public var id: String {
 		let data = try? NSKeyedArchiver.archivedData(withRootObject: self, requiringSecureCoding: false)
 		return data?.base64EncodedString() ?? "MCPeerID"
